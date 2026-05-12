@@ -5,7 +5,7 @@
 
 import type { Vector2D } from "@/three/types/vector"
 
-type DampedMotionState = {
+export type DampedMotionState = {
   current: Vector2D
   target: Vector2D
   damping: number
@@ -24,9 +24,14 @@ export function createDampedMotion(damping: number): DampedMotionState {
   }
 }
 
-// A ideia é atualizar o current em direção a target suavemente
+// A ideia é atualizar o current em direção a target suavemente,
+// independente do frame rate.
 
-export function updateDampedMotion(state: DampedMotionState) {
-  state.current.xPosition += (state.target.xPosition - state.current.xPosition) * state.damping
-  state.current.yPosition += (state.target.yPosition - state.current.yPosition) * state.damping
+export function updateDampedMotion(state: DampedMotionState, delta: number) {
+  const t = 1 - Math.exp(-state.damping * delta)
+
+  state.current.xPosition +=
+    (state.target.xPosition - state.current.xPosition) * t
+  state.current.yPosition +=
+    (state.target.yPosition - state.current.yPosition) * t
 }

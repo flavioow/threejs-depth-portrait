@@ -15,7 +15,7 @@ type RenderLoop = {
 */
 export function createRenderLoop(
   update: () => void,
-  render: () => void
+  render: () => void,
 ): RenderLoop {
   let running = false
   let rafId: number

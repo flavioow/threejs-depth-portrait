@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.15/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -7,19 +7,66 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!node_modules", "!.next", "!dist", "!build"]
+    "includes": [
+      "**",
+      "!node_modules",
+      "!.next",
+      "!.vscode",
+      "!dist",
+      "!build",
+      "!src/components/ui"
+    ]
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
-    "indentWidth": 2
+    "indentWidth": 2,
+    "lineWidth": 80,
+    "attributePosition": "multiline"
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "jsxQuoteStyle": "double",
+      "semicolons": "asNeeded",
+      "indentStyle": "space",
+      "bracketSameLine": true,
+      "arrowParentheses": "always"
+    }
   },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noUnknownAtRules": "off"
+        "noUnknownAtRules": "off",
+        "noExplicitAny": "warn",
+        "noDuplicateObjectKeys": "on"
+      },
+      "complexity": {
+        "noEmptyTypeParameters": "on",
+        "noImportantStyles": "info"
+      },
+      "style": {
+        "useConst": "on",
+        "useTemplate": "on"
+      },
+      "correctness": {
+        "noUnknownProperty": "on",
+        "noUnknownPseudoClass": "off",
+        "noUnknownTypeSelector": "off",
+        "noMissingVarFunction": "on"
+      },
+      "a11y": {
+        "useAltText": "on",
+        "useButtonType": "on",
+        "noAriaHiddenOnFocusable": "on",
+        "useHeadingContent": "on"
       }
     },
     "domains": {

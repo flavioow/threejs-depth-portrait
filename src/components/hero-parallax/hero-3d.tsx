@@ -4,18 +4,18 @@
   quando o loop continua ou não
 */
 
-"use client";
+"use client"
 
-import { useMemo, useRef } from "react";
-import { HeroCanvas } from "./hero-canvas";
+import { useMemo, useRef } from "react"
+import { HeroCanvas } from "./hero-canvas"
 
 type Hero3DProps = {
-  aspectRatio?: string;
-  minSize?: string;
-  idealSize?: string;
-  maxSize?: string;
-  className?: string;
-};
+  aspectRatio?: string
+  minSize?: string
+  idealSize?: string
+  maxSize?: string
+  className?: string
+}
 
 export function Hero3D({
   aspectRatio = "1 / 1",
@@ -25,19 +25,18 @@ export function Hero3D({
   className = "",
 }: Hero3DProps) {
   // calcula a área ativa do efeito
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null)
   const width = useMemo(
     () => `clamp(${minSize}, ${idealSize}, ${maxSize})`,
     [minSize, idealSize, maxSize],
-  );
+  )
 
   return (
     <div
       className={`relative overflow-hidden ${className}`}
       style={{ width, aspectRatio }}
-      ref={containerRef}
-    >
+      ref={containerRef}>
       <HeroCanvas containerRef={containerRef} />
     </div>
-  );
+  )
 }
