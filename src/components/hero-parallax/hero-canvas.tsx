@@ -64,7 +64,7 @@ export function HeroCanvas({ containerRef }: HeroCanvasProps) {
   return (
     <>
       <Canvas
-        camera={{ fov: 25, near: 0.1, far: 100, position: [-0.2, 4, 2] }}
+        camera={{ fov: 25, near: 0.1, far: 100, position: [0, 0, 2.2] }}
         className="h-full w-full"
         dpr={[1, 2]}
         frameloop="always"

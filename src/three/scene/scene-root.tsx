@@ -11,6 +11,7 @@ import {
   type HeroParallaxConfig,
 } from "./hero-parallax-config"
 import { ImagePlane } from "./image-plane"
+import { SceneReadiness } from "./scene-readiness"
 
 type SceneRootProps = {
   config?: HeroParallaxConfig
@@ -40,6 +41,7 @@ export function SceneRoot({
 
   return (
     <>
+      <SceneReadiness />
       <ambientLight intensity={0.22} />
       <directionalLight
         intensity={0.42}

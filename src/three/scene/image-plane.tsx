@@ -11,10 +11,9 @@ import {
   Vector2,
   Vector3,
 } from "three"
-
+import { useBreakpoint } from "@/hooks/use-breakpoint"
 import type { DampedMotionState } from "../systems/motion/damped-motion"
 import type { HeroParallaxConfig } from "./hero-parallax-config"
-import { useBreakpoint } from "@/hooks/use-breakpoint"
 
 import {
   HERO_IMAGE_PLANE_SEGMENTS,

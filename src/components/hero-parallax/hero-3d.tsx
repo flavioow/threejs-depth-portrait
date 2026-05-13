@@ -8,6 +8,7 @@
 
 import { useRef } from "react"
 import { HeroCanvas } from "./hero-canvas"
+import { usePageReadiness } from "@/hooks/use-page-readiness"
 
 type Hero3DProps = {
   aspectRatio?: string
@@ -17,11 +18,10 @@ type Hero3DProps = {
   className?: string
 }
 
-export function Hero3D({
-  className = "",
-}: Hero3DProps) {
+export function Hero3D({ className = "" }: Hero3DProps) {
   // calcula a área ativa do efeito
   const containerRef = useRef<HTMLDivElement | null>(null)
+  usePageReadiness()
 
   return (
     <div
