@@ -1,5 +1,6 @@
 import { useTexture } from "@react-three/drei"
-import { useFrame } from "@react-three/fiber"
+
+import { useFrame, useThree } from "@react-three/fiber"
 import { type RefObject, useMemo } from "react"
 
 import {
@@ -13,6 +14,7 @@ import {
 
 import type { DampedMotionState } from "../systems/motion/damped-motion"
 import type { HeroParallaxConfig } from "./hero-parallax-config"
+import { useBreakpoint } from "@/hooks/use-breakpoint"
 
 import {
   HERO_IMAGE_PLANE_SEGMENTS,
@@ -36,6 +38,43 @@ const texturePaths = {
 
 export function ImagePlane({ config, motionRef }: ImagePlaneProps) {
   const textures = useTexture(texturePaths)
+  const breakpoint = useBreakpoint()
+
+  const responsiveScale = (() => {
+    switch (breakpoint) {
+      case "md":
+        return 0.92
+      case "lg":
+        return 1
+      case "mobile":
+      default:
+        return 0.96
+    }
+  })()
+
+  const responsivePositionY = (() => {
+    switch (breakpoint) {
+      case "md":
+        return -0.06
+      case "lg":
+        return -0.05
+      case "mobile":
+      default:
+        return -0.05
+    }
+  })()
+
+  const responsivePositionX = (() => {
+    switch (breakpoint) {
+      case "md":
+        return 0
+      case "lg":
+        return 0
+      case "mobile":
+      default:
+        return 0.23
+    }
+  })()
 
   useMemo(() => {
     textures.diffuse.colorSpace = SRGBColorSpace
@@ -145,7 +184,9 @@ export function ImagePlane({ config, motionRef }: ImagePlaneProps) {
   })
 
   return (
-    <mesh>
+    <mesh
+      scale={[responsiveScale, responsiveScale, 1]}
+      position={[responsivePositionX, responsivePositionY, 0]}>
       <planeGeometry
         args={[
           HERO_IMAGE_PLANE_SIZE.width,
