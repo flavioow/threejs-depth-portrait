@@ -5,11 +5,9 @@ import { type RefObject, Suspense, useEffect, useRef } from "react"
 import { NoToneMapping, SRGBColorSpace } from "three"
 import { SceneRoot } from "@/three/scene/scene-root"
 import {
-  createPointerInput,
-  deactivatePointerInput,
-  type PointerInputState,
-  updatePointerInputFromEvent,
-} from "@/three/systems/input/pointer-input"
+  createInputManager,
+  type InputManager
+} from "@/three/systems/input/input-manager"
 import { useHeroParallaxControls } from "./use-hero-parallax-controls"
 
 type HeroCanvasProps = {
@@ -17,47 +15,43 @@ type HeroCanvasProps = {
 }
 
 type HeroSceneProps = {
-  pointerRef: RefObject<PointerInputState>
+  inputManagerRef: RefObject<InputManager | null>
 }
 
-function HeroScene({ pointerRef }: HeroSceneProps) {
+function HeroScene({ inputManagerRef }: HeroSceneProps) {
   const config = useHeroParallaxControls()
 
   return (
     <SceneRoot
       config={config}
-      pointerRef={pointerRef}
+      inputRef={inputManagerRef}
     />
   )
 }
 
 export function HeroCanvas({ containerRef }: HeroCanvasProps) {
-  const pointerRef = useRef(createPointerInput())
+  const inputManagerRef =
+    useRef<InputManager | null>(null)
 
   useEffect(() => {
     if (!containerRef.current) return
-    const container = containerRef.current
-    const pointer = pointerRef.current
 
-    const onPointerMove = (event: PointerEvent) => {
-      updatePointerInputFromEvent(
-        pointer,
-        event,
-        container.getBoundingClientRect(),
-      )
-    }
-    const onPointerLeave = () => {
-      deactivatePointerInput(pointer)
-    }
+    let mounted = true
 
-    container.addEventListener("pointermove", onPointerMove)
-    container.addEventListener("pointerleave", onPointerLeave)
-    container.addEventListener("pointercancel", onPointerLeave)
+    createInputManager(
+      containerRef.current,
+    ).then((manager) => {
+      if (!mounted) {
+        manager.destroy()
+        return
+      }
+
+      inputManagerRef.current = manager
+    })
 
     return () => {
-      container.removeEventListener("pointermove", onPointerMove)
-      container.removeEventListener("pointerleave", onPointerLeave)
-      container.removeEventListener("pointercancel", onPointerLeave)
+      mounted = false
+      inputManagerRef.current?.destroy()
     }
   }, [containerRef])
 
@@ -76,7 +70,7 @@ export function HeroCanvas({ containerRef }: HeroCanvasProps) {
           outputColorSpace: SRGBColorSpace,
         }}>
         <Suspense fallback={null}>
-          <HeroScene pointerRef={pointerRef} />
+          <HeroScene inputManagerRef={inputManagerRef} />
         </Suspense>
       </Canvas>
     </>

@@ -1,14 +1,9 @@
 /* Objetivo: normalizar movimento do pointer para valores entre -1 e 1 */
-
-export type PointerInputState = {
-  xPosition: number
-  yPosition: number
-  active: boolean
-}
+import { InputState } from "./input-state"
 
 const DEADZONE = 0.015
 
-function clamp(value: number, min: number, max: number) {
+function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value))
 }
 
@@ -16,7 +11,7 @@ function applyDeadzone(value: number) {
   return Math.abs(value) < DEADZONE ? 0 : value
 }
 
-export function createPointerInput(): PointerInputState {
+export function createPointerInput(): InputState {
   return {
     xPosition: 0,
     yPosition: 0,
@@ -25,7 +20,7 @@ export function createPointerInput(): PointerInputState {
 }
 
 export function updatePointerInputFromEvent(
-  state: PointerInputState,
+  state: InputState,
   event: PointerEvent,
   bounds: DOMRect,
 ) {
@@ -49,6 +44,6 @@ export function updatePointerInputFromEvent(
 }
 
 // Quando o pointer sai da área, não zeramos rapidamente, só inativamos
-export function deactivatePointerInput(state: PointerInputState) {
+export function deactivatePointerInput(state: InputState) {
   state.active = false
 }

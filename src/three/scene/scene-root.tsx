@@ -1,6 +1,6 @@
 import { useFrame } from "@react-three/fiber"
 import { type RefObject, useRef } from "react"
-import type { PointerInputState } from "../systems/input/pointer-input"
+import type { InputManager } from "../systems/input/input-manager"
 import {
   createDampedMotion,
   updateDampedMotion,
@@ -15,25 +15,25 @@ import { SceneReadiness } from "./scene-readiness"
 
 type SceneRootProps = {
   config?: HeroParallaxConfig
-  pointerRef: RefObject<PointerInputState>
+  inputRef: RefObject<InputManager | null>
 }
 
 export function SceneRoot({
   config = DEFAULT_HERO_PARALLAX_CONFIG,
-  pointerRef,
+  inputRef,
 }: SceneRootProps) {
   const motionRef = useRef(createDampedMotion(config.motionDamping))
 
   useFrame((_, delta) => {
-    const pointer = pointerRef.current
+    const input = inputRef.current?.state
     const motion = motionRef.current
 
     motion.damping = config.motionDamping
-    motion.target.xPosition = pointer.active
-      ? pointer.xPosition * config.pointerRange
+    motion.target.xPosition = input?.active
+      ? input.xPosition * config.pointerRange
       : 0
-    motion.target.yPosition = pointer.active
-      ? pointer.yPosition * config.pointerRange
+    motion.target.yPosition = input?.active
+      ? input.yPosition * config.pointerRange
       : 0
 
     updateDampedMotion(motion, delta)
