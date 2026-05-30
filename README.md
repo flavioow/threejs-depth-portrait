@@ -53,7 +53,7 @@ For now, the project already works as a source-code reference and live demo whil
 If you want to inspect the implementation locally, install the dependencies and start the development server:
 
 ```bash
-git clone
+git clone https://github.com/flavioow/threejs-depth-portrait.git
 cd threejs-depth-portrait
 bun install
 bun dev
