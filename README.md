@@ -41,12 +41,16 @@ The idea is simple: take a flat portrait and make it feel alive. Instead of usin
 
 This repository is the starting point for a practical guide on building a Three.js depth portrait effect with WebGL, React Three Fiber, GLSL shaders, depth maps and real-time interaction.
 
-The full documentation is still being written, but it will be split into two paths:
+The first version of the guide is available in English:
+
+- [Read the documentation](docs/en/README.md)
+
+The documentation will grow over time and split into two paths:
 
 - **Quick guide:** a direct step-by-step path for people who want to recreate the effect as fast as possible.
 - **Architecture notes:** a deeper breakdown of the shader decisions, texture maps, input systems, scene structure and trade-offs behind the implementation.
 
-For now, the project already works as a source-code reference and live demo while the tutorial is being prepared.
+For now, the project works as a source-code reference, live demo and starting point for the practical guide.
 
 ## Getting Started
 
@@ -56,7 +60,7 @@ If you want to inspect the implementation locally, install the dependencies and 
 git clone https://github.com/flavioow/threejs-depth-portrait.git
 cd threejs-depth-portrait
 bun install
-bun dev
+bun run dev
 ```
 
 After that, open `http://localhost:3000` and move your cursor around the portrait. On mobile devices, the experience can react to device orientation when supported by the browser.
